@@ -1,6 +1,4 @@
-package goodlog;
-
-
+package easylog;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,13 +10,13 @@ import java.util.GregorianCalendar;
  *
  * @author Luca Aguzzoli
  */
-public class Log {
+public class EasyLog {
 
     private static int currentDay = 0;
     private static File logFile;
     private static FileWriter fwLog;
 
-    private Log() {
+    private EasyLog() {
     }
 
     /**
@@ -62,7 +60,7 @@ public class Log {
             System.err.println("[" + getDate() + "] Impossibile scrivere messaggio d'errore: " + message);
         }
     }
-    
+
     /**
      * Write an error message into the log file
      *
@@ -79,6 +77,11 @@ public class Log {
         }
     }
 
+    /**
+     * Write raw data without write first the type of the message
+     *
+     * @param data message to write into the log file
+     */
     public static void writeRawData(String data) {
         check();
         try {
@@ -90,6 +93,10 @@ public class Log {
         }
     }
 
+    /**
+     * check the status of the log file. Create the file and/or the folders tree
+     * if it doesn't exists.
+     */
     private static void check() {
         File dir = checkDir();
         if (dir != null) {
@@ -110,6 +117,9 @@ public class Log {
         }
     }
 
+    /*
+     check the date and create the folder tree if doesn't exist
+     */
     private static File checkDir() {
         Calendar cal = new GregorianCalendar();
         int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -118,7 +128,6 @@ public class Log {
         } else {
             currentDay = day;
             return new File("log" + File.separatorChar + cal.get(Calendar.YEAR) + File.separatorChar + (cal.get(Calendar.MONTH) + 1));
-
         }
     }
 
